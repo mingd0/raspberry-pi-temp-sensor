@@ -1,9 +1,22 @@
 # import os
 import glob
 import time
+import requests
 
 # Define the path to the DS18B20 sensor
 sensor_path = "/sys/bus/w1/devices/28-3de10457adc8"
+
+
+def send_temperature_to_server(temperature):
+    url = "http://127.0.0.1:3000/api/temperatures/record-temperature"
+    data = {
+        "timestamp": time.time(),
+        "value": temperature,
+        "unit": "Fahrenheit",
+        "device_id": "28-3de10457adc8",
+        "data_source": "DS18B20 Temperature Sensor",
+    }
+    requests.post(url, json=data)
 
 
 # Read temperature data from the sensor
@@ -27,4 +40,6 @@ while True:
     temperature = read_temperature()
     if temperature is not None:
         print(f"Temperature: {temperature}°F")
+        send_temperature_to_server(temperature)
+
     time.sleep(30)  # Wait for 1 second before reading again
