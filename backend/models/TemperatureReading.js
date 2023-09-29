@@ -14,7 +14,7 @@ const TemperatureReadingSchema = new mongoose.Schema({
   unit: {
     type: String,
     required: true,
-    default: "Farhenheit"
+    default: "Fahrenheit"
   },
   device_id: {
     type: String,
@@ -27,4 +27,6 @@ const TemperatureReadingSchema = new mongoose.Schema({
 });
 
 
-const TemperatureReading = mongoose.model('Temperature', temperatureReadingSchema);
+const TemperatureReading = mongoose.model('Temperature', TemperatureReadingSchema);
+
+module.exports = TemperatureReading;
